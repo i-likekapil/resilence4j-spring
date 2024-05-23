@@ -32,7 +32,7 @@ public class ResilienceExceptionHandler {
 	public void handleTimeoutException(TimeoutException ex) {
 		ex.printStackTrace();
 		logger.error("TimeoutException Recieved (resilience4J TimeLimiter). HTTP Response Status code set to: "
-				+ HttpStatus.REQUEST_TIMEOUT+" thread id : "+Thread.currentThread().getId()+" thread name : "+Thread.currentThread().getName());
+				+ HttpStatus.REQUEST_TIMEOUT+" thread id : "+Thread.currentThread().getId()+" thread name : "+Thread.currentThread().getName(),ex);
 	}
 
 	// ratelimiter related exception
