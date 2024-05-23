@@ -24,11 +24,11 @@ public class ResilientAppController {
 
 	@GetMapping("bizTrxA")
 	public String bizTrxA() throws IOException {
-		System.out.println("inside bixTrxA "+Thread.currentThread().getName());
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		System.out.println("Stack trace from bizTrxA ");
-		for(StackTraceElement element: stackTrace)
-			System.out.println(element);
+//		System.out.println("inside bixTrxA "+Thread.currentThread().getName());
+//		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+//		System.out.println("Stack trace from bizTrxA ");
+//		for(StackTraceElement element: stackTrace)
+//			System.out.println(element);
 		//return backendServiceCaller.callAps();
 		return apiServiceInvoker.callAps();
 
@@ -36,11 +36,11 @@ public class ResilientAppController {
 
 	@GetMapping("bizTrxB")
 	public CompletableFuture<String> bizTrxB() {
-		System.out.println("inside bixTrxB "+Thread.currentThread().getName());
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		System.out.println("Stack trace from bizTrxB ");
-		for(StackTraceElement element: stackTrace)
-			System.out.println(element);
+//		System.out.println("inside bixTrxB "+Thread.currentThread().getName());
+//		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+//		System.out.println("Stack trace from bizTrxB ");
+//		for(StackTraceElement element: stackTrace)
+//			System.out.println(element);
 		return apiServiceInvoker.callEcprAsync();
 	}
 

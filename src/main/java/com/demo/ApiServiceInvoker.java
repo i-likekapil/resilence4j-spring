@@ -45,7 +45,12 @@ public class ApiServiceInvoker {
 
 	@Bulkhead(name = "ApsBackendService")
 	public String callAps() throws IOException {
-		logger.debug("ApiServiceInvoker making a call to " + env.getProperty("apsUrl"));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        logger.debug("ApiServiceInvoker making a call to " + env.getProperty("apsUrl"));
 		Request request = new Request.Builder().url(env.getProperty("apsUrl")).build();
 		Response response = apsClient.newCall(request).execute();
 		String responseString = response.body().string();

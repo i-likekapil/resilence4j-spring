@@ -21,9 +21,9 @@ public class ResilienceExceptionHandler {
 	// bulkhead related exception
 	@ExceptionHandler({ BulkheadFullException.class })
 	@ResponseStatus(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED)
-	public void handleBulkheadFullException() {
-		logger.info("BulkheadFullException Recieved (resilience4J Bulkhead). HTTP Response Status code set to: "
-				+ HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
+	public void handleBulkheadFullException(BulkheadFullException ex) {
+		logger.error("BulkheadFullException Recieved (resilience4J Bulkhead). HTTP Response Status code set to: "
+				+ HttpStatus.BANDWIDTH_LIMIT_EXCEEDED+" ,thread id : "+Thread.currentThread().getId()+" ,thread name : "+Thread.currentThread().getName(),ex);
 	}
 
 	// timelimiter related exception
@@ -32,25 +32,25 @@ public class ResilienceExceptionHandler {
 	public void handleTimeoutException(TimeoutException ex) {
 		ex.printStackTrace();
 		logger.error("TimeoutException Recieved (resilience4J TimeLimiter). HTTP Response Status code set to: "
-				+ HttpStatus.REQUEST_TIMEOUT+" thread id : "+Thread.currentThread().getId()+" thread name : "+Thread.currentThread().getName(),ex);
+				+ HttpStatus.REQUEST_TIMEOUT+" ,thread id : "+Thread.currentThread().getId()+" ,thread name : "+Thread.currentThread().getName(),ex);
 	}
 
 	// ratelimiter related exception
 	@ExceptionHandler({ RequestNotPermitted.class })
 	@ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
-	public void handleRequestNotPermitted() {
+	public void handleRequestNotPermitted(RequestNotPermitted ex) {
 		logger.info(
 				"RequestNotPermitted exception Recieved (resilience4J RateLimiter) . HTTP Response Status code set to: "
-						+ HttpStatus.TOO_MANY_REQUESTS);
+						+ HttpStatus.TOO_MANY_REQUESTS+" ,thread id : "+Thread.currentThread().getId()+" ,thread name : "+Thread.currentThread().getName(),ex);
 	}
 
 	// circuit breaker related exception
 	@ExceptionHandler({ CallNotPermittedException.class })
 	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-	public void handleCallNotPermittedException() {
+	public void handleCallNotPermittedException(CallNotPermittedException ex) {
 		logger.info(
 				"CallNotPermittedException Recieved (resilience4J CircuitBreaker) . HTTP Response Status code set to: "
-						+ HttpStatus.SERVICE_UNAVAILABLE);
+						+ HttpStatus.SERVICE_UNAVAILABLE+" ,thread id : "+Thread.currentThread().getId()+" ,thread name : "+Thread.currentThread().getName(),ex);
 	}
 
 }
