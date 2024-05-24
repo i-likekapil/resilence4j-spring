@@ -69,7 +69,7 @@ public class ApiServiceInvoker {
 
 	public String callEcpr() {
 		String ecprUrl = env.getProperty("ecprUrl");
-		System.out.println("ecprUrl = " + ecprUrl);
+		//System.out.println("ecprUrl = " + ecprUrl);
 		Request request = new Request.Builder().url(ecprUrl).build();
 		Response response = null;
 		String s = null;
