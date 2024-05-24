@@ -1,7 +1,7 @@
 spring:
   application:
     name: demo
-
+    
 management:
   endpoints:
     web:
@@ -11,7 +11,7 @@ management:
 resilience4j.bulkhead:
   configs:
     default:
-      max-concurrent-calls: 2
+      max-concurrent-calls: 1
       max-wait-duration: 0
   instances:
     ApsBackendService:
@@ -23,7 +23,7 @@ resilience4j.timelimiter:
   configs:
     default:
       cancelRunningFuture: true
-      timeoutDuration: 1500ms
+      timeoutDuration: 1ms
   instances:
     EcprBackendService:
       baseConfig: default
@@ -33,8 +33,8 @@ resilience4j.timelimiter:
 resilience4j.ratelimiter:
   configs:
     default:
-      limit-for-period: 4
-      limit-refresh-period: 1s
+      limit-for-period: 2
+      limit-refresh-period: 5s
       timeout-duration: 0s
       allow-health-indicator-to-fail: true
       subscribe-for-events: true
@@ -49,11 +49,11 @@ resilience4j.circuitbreaker:
   configs:
     default:
       registerHealthIndicator: true
-      slidingWindowSize: 10
-      minimumNumberOfCalls: 10
-      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowSize: 10 #1
+      minimumNumberOfCalls: 10 #1
+      permittedNumberOfCallsInHalfOpenState: 3 #1
       automaticTransitionFromOpenToHalfOpenEnabled: true
-      waitDurationInOpenState: 5s
+      waitDurationInOpenState: 5s #1s
       failureRateThreshold: 50
       eventConsumerBufferSize: 50
       slowCallDurationThreshold: 500
@@ -61,7 +61,7 @@ resilience4j.circuitbreaker:
     SimsBackendService:
       baseConfig: default
     LexisNexisBackendService:
-      baseConfig: default
+      baseConfig: default    
 
 resilience4j.retry:
   configs:
@@ -70,30 +70,30 @@ resilience4j.retry:
       waitDuration: 100
       retry-exceptions:
         - java.lang.Exception
-
+        
   instances:
     AngBackendService:
       baseConfig: default
     LexisNexisBackendService:
-      baseConfig: default
+      baseConfig: default      
 
 backendService:
-  baseUrl:  http://localhost:9090
+  baseUrl:  http://localhost:9090  
   path:
-    aps:  /api/aps
-    ecpr: /api/ecpr
+    aps:  /api/thread
+    ecpr: /http
     ews:  /api/ews
     sims: /api/sims
     ang:  /api/ang
     lexisNexis: /api/lexisNexis
-
+    
 #apsUrl: http://localhost:9090/api/aps
-apsUrl: http://localhost:9090/api/aps
-ecprUrl: http://localhost:9090/api/ecpr
-ewsUrl: http://localhost:9090/api/ews
-simsUrl: http://localhost:9090/api/sims
-angUrl: http://localhost:9090/api/ang
-lexisNexisUrl: http://localhost:9090/api/lexisNexis
+apsUrl: http://localhost:9090/thread
+ecprUrl: http://localhost:9090/http
+ewsUrl: http://localhost:9090/database
+simsUrl: http://localhost:9090/ldap
+angUrl: http://localhost:9090/jms
+lexisNexisUrl: http://localhost:9090/reactive
 
 server:
   tomcat:
