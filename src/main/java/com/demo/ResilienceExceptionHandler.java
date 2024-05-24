@@ -39,7 +39,7 @@ public class ResilienceExceptionHandler {
 	@ExceptionHandler({ RequestNotPermitted.class })
 	@ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
 	public void handleRequestNotPermitted(RequestNotPermitted ex) {
-		logger.info(
+		logger.error(
 				"RequestNotPermitted exception Recieved (resilience4J RateLimiter) . HTTP Response Status code set to: "
 						+ HttpStatus.TOO_MANY_REQUESTS+" ,thread id : "+Thread.currentThread().getId()+" ,thread name : "+Thread.currentThread().getName(),ex);
 	}
@@ -48,7 +48,7 @@ public class ResilienceExceptionHandler {
 	@ExceptionHandler({ CallNotPermittedException.class })
 	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 	public void handleCallNotPermittedException(CallNotPermittedException ex) {
-		logger.info(
+		logger.error(
 				"CallNotPermittedException Recieved (resilience4J CircuitBreaker) . HTTP Response Status code set to: "
 						+ HttpStatus.SERVICE_UNAVAILABLE+" ,thread id : "+Thread.currentThread().getId()+" ,thread name : "+Thread.currentThread().getName(),ex);
 	}
